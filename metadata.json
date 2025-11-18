@@ -1,0 +1,7 @@
+{
+  "name": "Vr_2.0_Super App Cuong",
+  "description": "A central application hub to launch and manage various mini-applications, inspired by a mobile phone's home screen. This 'super app' provides a unified interface to access different tools like a notepad, a weather app, a calculator, and an AI chat assistant powered by Gemini.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
