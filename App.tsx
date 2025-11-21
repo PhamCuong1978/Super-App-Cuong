@@ -20,7 +20,7 @@ const APPS: AppDefinition[] = [
     id: 'meeting-minutes',
     name: 'Biên bản họp',
     icon: MeetingIcon,
-    url: 'https://aistudio.google.com/apps/drive/14fLTUR6QUdxie3FJd4IRVGZHOOEc_tA8?showPreview=true&showAssistant=true',
+    url: 'https://bien-ban-hop.vercel.app/',
     color: '#0d9488',
     description: 'Meeting Assistant'
   },
@@ -44,7 +44,7 @@ const APPS: AppDefinition[] = [
     id: 'notebook-lm',
     name: 'Notebook LM Clone',
     icon: NotebookLMIcon,
-    url: 'https://aistudio.google.com/apps/drive/1Jvk9DVf8pV4Sfw-TrZZQKIZwD9QkMsYZ?showPreview=true&showAssistant=true',
+    url: 'https://notebook-lm-cuong-17d8g35be-phamcuongs-projects-54b0304a.vercel.app/',
     color: '#9333ea',
     description: 'AI-Powered Notes'
   },
@@ -68,7 +68,7 @@ const APPS: AppDefinition[] = [
     id: 'calculator',
     name: 'Kế toán Online',
     icon: ScaleIcon,
-    url: 'https://aistudio.google.com/apps/drive/1dld3seZ1ROrZO-bYvtmJbRZg2JIGUpjb?showPreview=true&showAssistant=true',
+    url: 'https://vr-1-0-ketoan-online.vercel.app/',
     color: '#64748b',
     description: 'Accounting Tools'
   },
