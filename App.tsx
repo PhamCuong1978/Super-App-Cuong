@@ -44,7 +44,7 @@ const APPS: AppDefinition[] = [
     id: 'notebook-lm',
     name: 'Notebook LM Clone',
     icon: NotebookLMIcon,
-    url: 'https://notebook-lm-cuong-17d8g35be-phamcuongs-projects-54b0304a.vercel.app/',
+    url: 'https://notebook-lm-cuong.vercel.app/',
     color: '#9333ea',
     description: 'AI-Powered Notes'
   },
