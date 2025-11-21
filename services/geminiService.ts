@@ -13,9 +13,10 @@ const ai = new GoogleGenAI({ apiKey: apiKey || ' ' });
 
 export function createChat(systemInstruction?: string): Chat {
   const chat = ai.chats.create({
-    model: 'gemini-2.5-pro',
+    model: 'gemini-2.5-flash', // Upgraded to the latest Flash model for speed and quality
     config: {
-      systemInstruction: systemInstruction || 'You are a helpful and friendly assistant. Keep your responses concise and clear.',
+      systemInstruction: systemInstruction || 'Bạn là một trợ lý AI thông minh, hữu ích và thân thiện. Bạn có khả năng tìm kiếm thông tin trên internet để đưa ra câu trả lời chính xác và cập nhật nhất. Hãy trả lời ngắn gọn, đi thẳng vào vấn đề trừ khi được yêu cầu giải thích chi tiết.',
+      tools: [{ googleSearch: {} }], // Enable Google Search Grounding
     },
   });
   return chat;
@@ -23,8 +24,11 @@ export function createChat(systemInstruction?: string): Chat {
 
 export async function generateContent(prompt: string): Promise<string> {
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-pro',
+    model: 'gemini-2.5-flash',
     contents: prompt,
+    config: {
+      tools: [{ googleSearch: {} }],
+    }
   });
-  return response.text;
+  return response.text || '';
 }

@@ -1,12 +1,15 @@
+
 import React, { useState } from 'react';
 import AppContainer from '../AppContainer';
+import { User } from '../../types';
 
 interface CalculatorAppProps {
   onExit: () => void;
   isVisible: boolean;
+  user?: User | null;
 }
 
-const CalculatorApp: React.FC<CalculatorAppProps> = ({ onExit, isVisible }) => {
+const CalculatorApp: React.FC<CalculatorAppProps> = ({ onExit, isVisible, user }) => {
   const [display, setDisplay] = useState('0');
   const [firstOperand, setFirstOperand] = useState<number | null>(null);
   const [operator, setOperator] = useState<string | null>(null);
@@ -98,7 +101,7 @@ const CalculatorApp: React.FC<CalculatorAppProps> = ({ onExit, isVisible }) => {
   };
 
   return (
-    <AppContainer appName="Calculator" onExit={onExit} isVisible={isVisible}>
+    <AppContainer appName="Kế toán Online" onExit={onExit} isVisible={isVisible} user={user}>
       <div className="flex justify-center items-center flex-grow">
         <div className="w-full max-w-xs bg-slate-800 rounded-2xl shadow-2xl p-4">
           <div className="bg-slate-900 text-white text-5xl text-right font-light rounded-lg p-4 mb-4 break-all">

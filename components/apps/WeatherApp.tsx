@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import AppContainer from '../AppContainer';
+import { User } from '../../types';
 
 interface WeatherAppProps {
   onExit: () => void;
   isVisible: boolean;
+  user?: User | null;
 }
 
 const weatherData = [
@@ -13,7 +15,7 @@ const weatherData = [
   { city: 'Tokyo', temp: '25°C', condition: 'Clear', icon: '☀️' },
 ];
 
-const WeatherApp: React.FC<WeatherAppProps> = ({ onExit, isVisible }) => {
+const WeatherApp: React.FC<WeatherAppProps> = ({ onExit, isVisible, user }) => {
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
 
   const changeCity = () => {
@@ -23,7 +25,7 @@ const WeatherApp: React.FC<WeatherAppProps> = ({ onExit, isVisible }) => {
   const currentW = weatherData[currentCityIndex];
 
   return (
-    <AppContainer appName="Weather" onExit={onExit} isVisible={isVisible}>
+    <AppContainer appName="Weather" onExit={onExit} isVisible={isVisible} user={user}>
       <div className="flex flex-col items-center justify-center flex-grow text-center">
         <div className="bg-slate-700 p-8 rounded-2xl shadow-lg w-full max-w-sm">
           <h3 className="text-3xl font-bold text-white">{currentW.city}</h3>

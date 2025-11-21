@@ -1,13 +1,14 @@
+
 import React, { useState } from 'react';
-import { AppDefinition } from './types';
+import { AppDefinition, User } from './types';
+import { useAuth } from './hooks/useAuth'; // Import the auth module
 import HomeScreen from './components/HomeScreen';
 import NotesApp from './components/apps/NotesApp';
 import WeatherApp from './components/apps/WeatherApp';
-import CalculatorApp from './components/apps/CalculatorApp';
 import GeminiChatApp from './components/apps/GeminiChatApp';
 import NotesIcon from './components/icons/NotesIcon';
 import WeatherIcon from './components/icons/WeatherIcon';
-import CalculatorIcon from './components/icons/CalculatorIcon';
+import ScaleIcon from './components/icons/ScaleIcon';
 import ChatIcon from './components/icons/ChatIcon';
 import MeetingIcon from './components/icons/MeetingIcon';
 import BusinessPlanIcon from './components/icons/BusinessPlanIcon';
@@ -35,7 +36,7 @@ const APPS: AppDefinition[] = [
     id: 'bank-digital',
     name: 'Chuyển đổi sổ Bank',
     icon: BankIcon,
-    url: 'https://aistudio.google.com/apps/drive/1acRun2kBNVBfQKtx-1tLqT-pR2rOvq2x?showPreview=true&showAssistant=true',
+    url: 'https://vr-2-1-bank-statement-accounting-co.vercel.app/',
     color: '#2563eb',
     description: 'Finance Tech Expert'
   },
@@ -65,11 +66,11 @@ const APPS: AppDefinition[] = [
   },
   {
     id: 'calculator',
-    name: 'Calculator',
-    icon: CalculatorIcon,
-    component: CalculatorApp,
+    name: 'Kế toán Online',
+    icon: ScaleIcon,
+    url: 'https://aistudio.google.com/apps/drive/1dld3seZ1ROrZO-bYvtmJbRZg2JIGUpjb?showPreview=true&showAssistant=true',
     color: '#64748b',
-    description: 'Calculations'
+    description: 'Accounting Tools'
   },
   {
     id: 'weather',
@@ -83,6 +84,16 @@ const APPS: AppDefinition[] = [
 
 const App: React.FC = () => {
   const [activeAppId, setActiveAppId] = useState<string | null>(null);
+  // Use the Auth module for user tracking
+  const { user, signIn, signOut, isLoading } = useAuth();
+
+  const handleSignIn = async () => {
+    try {
+      await signIn();
+    } catch (error) {
+      alert(`Could not sign in: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  };
   
   const handleSelectApp = (id: string) => {
     setActiveAppId(id);
@@ -92,17 +103,39 @@ const App: React.FC = () => {
     setActiveAppId(null);
   };
   
+  // Display a loading screen while checking authentication status
+  if (isLoading) {
+      return (
+          <div className="h-screen w-screen bg-slate-900 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+      );
+  }
+
   return (
     <div className="h-screen w-screen bg-slate-900 bg-grid-slate-700/[0.2] relative overflow-hidden">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-slate-900 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         <div className="relative w-full h-full overflow-y-auto">
             <div className={`transition-all duration-500 ease-in-out ${activeAppId ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}>
-                <HomeScreen apps={APPS} onSelectApp={handleSelectApp} />
+                <HomeScreen 
+                  apps={APPS} 
+                  onSelectApp={handleSelectApp}
+                  user={user}
+                  onSignIn={handleSignIn}
+                  onSignOut={signOut}
+                />
             </div>
 
             {APPS.filter(app => app.component).map(app => {
                  const AppComponent = app.component!;
-                 return <AppComponent key={app.id} onExit={handleExitApp} isVisible={activeAppId === app.id} />;
+                 // Pass user to all components now, since AppContainer uses it
+                 const props: { key: string; onExit: () => void; isVisible: boolean; user?: User | null } = {
+                     key: app.id,
+                     onExit: handleExitApp,
+                     isVisible: activeAppId === app.id,
+                     user: user
+                 };
+                 return <AppComponent {...props} />;
             })}
         </div>
     </div>
