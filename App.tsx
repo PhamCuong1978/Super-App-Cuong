@@ -28,7 +28,7 @@ const APPS: AppDefinition[] = [
     id: 'business-plan',
     name: 'Phương án kinh doanh',
     icon: BusinessPlanIcon,
-    url: 'https://aistudio.google.com/apps/drive/1_F_WvWOenDPo4UyHiSt7ExIIZe5aTmcd?showPreview=true&showAssistant=true',
+    url: 'https://kehoach-kd-cuong.vercel.app/',
     color: '#16a34a',
     description: 'Business Consultant'
   },
